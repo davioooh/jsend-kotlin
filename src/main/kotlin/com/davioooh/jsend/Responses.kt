@@ -38,7 +38,7 @@ class SuccessResponse<T>(data: T? = null) : JSendResponse<T>(SUCCESS, data)
  *
  * @author David Castelletti
 </T> */
-class FailResponse<T>(data: T? = null) : JSendResponse<T>(FAIL, data)
+class FailResponse<T>(data: T) : JSendResponse<T>(FAIL, data)
 
 
 /**
