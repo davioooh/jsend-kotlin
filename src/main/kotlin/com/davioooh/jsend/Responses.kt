@@ -1,6 +1,9 @@
 package com.davioooh.jsend
 
 import com.davioooh.jsend.Status.*
+import com.fasterxml.jackson.annotation.JsonInclude
+import com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL
+import com.fasterxml.jackson.annotation.JsonValue
 
 
 /**
@@ -8,7 +11,11 @@ import com.davioooh.jsend.Status.*
  *
  * @author David Castelletti
  */
-enum class Status { SUCCESS, FAIL, ERROR }
+enum class Status(@JsonValue val key: String) {
+    SUCCESS("success"),
+    FAIL("fail"),
+    ERROR("error")
+}
 
 
 /**
@@ -31,6 +38,7 @@ abstract class JSendResponse<T>(val status: Status, val data: T? = null)
  *
  * @author David Castelletti
  */
+@JsonInclude(NON_NULL)
 class SuccessResponse<T>(data: T? = null) : JSendResponse<T>(SUCCESS, data)
 
 
@@ -55,5 +63,6 @@ class FailResponse<T>(data: T) : JSendResponse<T>(FAIL, data)
  *
  * @author David Castelletti
  */
+@JsonInclude(NON_NULL)
 class ErrorResponse<T>(val message: String, val code: Int? = null, data: T? = null) :
     JSendResponse<T>(ERROR, data)
